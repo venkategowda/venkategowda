@@ -1,0 +1,24 @@
+if [ "$(hostname)" == "server1" ]
+then
+ps -ef | grep -i jira |grep -v grep > /dev/null
+if [ $? != 0 ]
+then
+      systemctl start jira  > /dev/null
+          wait
+      echo -e "Maintainence activity has been completed" | mail -s "Jira application is up and running on $(hostname)" -r AtlAlerts@walgreens.com venkategowda.m@walgreens.com
+else
+      echo -e "Maintainence activity has been started" | mail -s "Jira application is stopped on $(hostname)" -r AtlAlerts@walgreens.com venkategowda.m@walgreens.com
+fi
+
+if [ "$(hostname)" == "server2" ]
+then
+ps -ef | grep -i bitbucket |grep -v grep > /dev/null
+if [ $? != 0 ]
+then
+      systemctl start bitbucket  > /dev/null
+          wait
+      echo -e "Maintainence activity has been completed" | mail -s "Bitbucket application is up and running on $(hostname)" -r AtlAlerts@walgreens.com venkategowda.m@walgreens.com
+else
+      echo -e "Maintainence activity has been started" | mail -s "Bitbucket application is stopped on $(hostname)" -r AtlAlerts@walgreens.com venkategowda.m@walgreens.com
+fi
+fi
